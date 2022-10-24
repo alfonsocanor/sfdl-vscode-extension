@@ -11,22 +11,18 @@ export enum LOG_LINE {
     SOQL_EXECUTE
 }
 
-export enum ACTION_NAME {
-    name
-}
-
 export const ACTIONS = [
     {
-        label: 'SFDL: Remove HEAP_ALLOCATE & STATEMENT_EXECUTE Lines',
+        label: 'SFDL: Apex - Remove HEAP_ALLOCATE & STATEMENT_EXECUTE Lines',
         name: 'removeHeapAllocateAndStatementExecute',
     },
     {
-        label: 'SFDL: Format Hierarchy Entry/Exit',
+        label: 'SFDL: Apex - Format Hierarchy Entry/Exit',
         name: 'hierarchyEntryExit',
     },
     {
-        label: 'SFDL: Apply all actions',
-        name: 'applyAllFormattingActions',
+        label: 'SFDL: Apex - Apply all actions',
+        name: 'applyAll',
     },
 ];
 

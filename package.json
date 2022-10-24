@@ -10,13 +10,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:sfdl.execute"
+    "onCommand:sfdl.processLog"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "sfdl.execute",
+        "command": "sfdl.processLog",
         "title": "SFDL: Press Enter and Select an Action..."
       }
     ]

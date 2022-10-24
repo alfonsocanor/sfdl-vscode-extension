@@ -6,6 +6,10 @@ export function getLog(editor){
     return log;
 }
 
+export function getFileName(editor){
+    return editor.document.fileName;
+}
+
 export function selectAllPageContent(editor){
     let firstLine = editor.document.lineAt(0);
     let lastLine = editor.document.lineAt(editor.document.lineCount - 1);
