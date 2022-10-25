@@ -1,25 +1,17 @@
-import * as vscode from 'vscode';
-import { ILog } from "../iLog";
-import { ApexLogProcessor } from './apexLogProcessor';
-import * as constants from './constants';
+import { ILogAction } from "../iLogAction";
+import { ILogValidation } from "../iLogValidation";
+import { LogMenu } from "../logMenu";
+import { LogProcessor } from "../LogProcessor";
 
-export class ApexLog implements ILog {
-    process(): void {
-        const quickPick = vscode.window.createQuickPick();
-        quickPick.items = constants.ACTIONS.map((action: {label: string, name: string}) => ({ label: action.label, name: action.name }));
-    
-        quickPick.onDidChangeSelection(([action]) => {
-            if (action) {
-                quickPick.dispose();
-                this.processor(action['name']);
-            }
-        });
-    
-        quickPick.onDidHide(() => quickPick.dispose());
-        quickPick.show();
-    }
+export class ApexLog extends LogProcessor {
+    logMenu: LogMenu;
+    validation: ILogValidation;
+    action: ILogAction;
 
-    processor(action: string): void {
-        //new ApexLogProcessor(action).execute();
+    constructor(private _logMenu: LogMenu, private _validation: ILogValidation, private _action: ILogAction){
+        super();
+        this.logMenu = _logMenu;
+        this.validation = _validation;
+        this.action = _action;
     }
 }

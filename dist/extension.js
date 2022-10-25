@@ -1,85 +1,8 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ([
-/* 0 */,
-/* 1 */
-/***/ ((module) => {
+/******/ 	var __webpack_modules__ = ({
 
-module.exports = require("vscode");
-
-/***/ }),
-/* 2 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ApexLog = void 0;
-const vscode = __webpack_require__(1);
-const constants = __webpack_require__(5);
-class ApexLog {
-    process() {
-        const quickPick = vscode.window.createQuickPick();
-        quickPick.items = constants.ACTIONS.map((action) => ({ label: action.label, name: action.name }));
-        quickPick.onDidChangeSelection(([action]) => {
-            if (action) {
-                quickPick.dispose();
-                this.processor(action['name']);
-            }
-        });
-        quickPick.onDidHide(() => quickPick.dispose());
-        quickPick.show();
-    }
-    processor(action) {
-        //new ApexLogProcessor(action).execute();
-    }
-}
-exports.ApexLog = ApexLog;
-
-
-/***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.EXECUTED_ACTION_ERROR_MESSAGE = exports.EXECUTED_ACTION_SUCCESS_MESSAGE = exports.ACTIONS = exports.LOG_LINE = void 0;
-var LOG_LINE;
-(function (LOG_LINE) {
-    LOG_LINE[LOG_LINE["HEAP_ALLOCATE"] = 0] = "HEAP_ALLOCATE";
-    LOG_LINE[LOG_LINE["STATEMENT_EXECUTE"] = 1] = "STATEMENT_EXECUTE";
-    LOG_LINE[LOG_LINE["SYSTEM_METHOD_ENTRY"] = 2] = "SYSTEM_METHOD_ENTRY";
-    LOG_LINE[LOG_LINE["CONSTRUCTOR_ENTRY"] = 3] = "CONSTRUCTOR_ENTRY";
-    LOG_LINE[LOG_LINE["CONSTRUCTOR_EXIT"] = 4] = "CONSTRUCTOR_EXIT";
-    LOG_LINE[LOG_LINE["CODE_UNIT_STARTED"] = 5] = "CODE_UNIT_STARTED";
-    LOG_LINE[LOG_LINE["CODE_UNIT_FINISHED"] = 6] = "CODE_UNIT_FINISHED";
-    LOG_LINE[LOG_LINE["METHOD_ENTRY"] = 7] = "METHOD_ENTRY";
-    LOG_LINE[LOG_LINE["METHOD_EXIT"] = 8] = "METHOD_EXIT";
-    LOG_LINE[LOG_LINE["SOQL_EXECUTE"] = 9] = "SOQL_EXECUTE";
-})(LOG_LINE = exports.LOG_LINE || (exports.LOG_LINE = {}));
-exports.ACTIONS = [
-    {
-        label: 'SFDL: Apex - Remove HEAP_ALLOCATE & STATEMENT_EXECUTE Lines',
-        name: 'removeHeapAllocateAndStatementExecute',
-    },
-    {
-        label: 'SFDL: Apex - Format Hierarchy Entry/Exit',
-        name: 'hierarchyEntryExit',
-    },
-    {
-        label: 'SFDL: Apex - Apply all actions',
-        name: 'applyAll',
-    },
-];
-exports.EXECUTED_ACTION_SUCCESS_MESSAGE = 'Salesforce Debug Logs executed!';
-exports.EXECUTED_ACTION_ERROR_MESSAGE = 'Salesforce Debug Logs can\'t process the file. Invalid Apex Log.';
-
-
-/***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */
+/***/ 5:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -87,20 +10,53 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Log = exports.editor = void 0;
 const vscode = __webpack_require__(1);
 exports.editor = vscode.window.activeTextEditor;
-class Log {
-    constructor(_log) {
-        this._log = _log;
+var EVENT_NAME;
+(function (EVENT_NAME) {
+    EVENT_NAME[EVENT_NAME["PROCESS"] = 0] = "PROCESS";
+    EVENT_NAME[EVENT_NAME["ACTION"] = 1] = "ACTION";
+    EVENT_NAME[EVENT_NAME["VALIDATION"] = 2] = "VALIDATION";
+    EVENT_NAME[EVENT_NAME["MENU"] = 3] = "MENU";
+})(EVENT_NAME || (EVENT_NAME = {}));
+//Map is logType => eventName => class/interface name
+const LOG_TYPE_PROCESOR_MAPPING = {
+    'apexLog': {
+        'PROCESS': 'ApexLog',
+        'ACTION': 'ApexLogAction',
+        'VALIDATION': 'ApexLogValidation',
+        'MENU': 'ApexLogMenu'
     }
-    run() {
-        console.log('@run');
-        this._log.process();
+};
+class Log {
+    constructor(_logType) {
+        this._logType = _logType;
+    }
+    process() {
+        let processor = this.reflection(EVENT_NAME.PROCESS, this.processorConstructor());
+        processor[EVENT_NAME.PROCESS](); //Execute process method from LogProcessor class
+    }
+    //constructor default = empty array
+    reflection(eventName, constructor = new Array()) {
+        let newInstance = Object.create(vscode.window[LOG_TYPE_PROCESOR_MAPPING[this._logType][eventName]].prototype);
+        newInstance.constructor.apply(newInstance, constructor);
+        return newInstance;
+    }
+    processorConstructor() {
+        return new Array(this.reflection(EVENT_NAME.MENU), this.reflection(EVENT_NAME.VALIDATION), this.reflection(EVENT_NAME.ACTION));
     }
 }
 exports.Log = Log;
 
 
+/***/ }),
+
+/***/ 1:
+/***/ ((module) => {
+
+module.exports = require("vscode");
+
 /***/ })
-/******/ 	]);
+
+/******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -137,8 +93,7 @@ exports.deactivate = exports.activate = void 0;
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = __webpack_require__(1);
-const apexLog_1 = __webpack_require__(2);
-const log_1 = __webpack_require__(8);
+const log_1 = __webpack_require__(5);
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 function activate(context) {
@@ -149,7 +104,7 @@ function activate(context) {
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand('sfdl.processLog', () => {
-        new log_1.Log(new apexLog_1.ApexLog()).run();
+        new log_1.Log('apexLog').process();
     });
     context.subscriptions.push(disposable);
 }

@@ -1,5 +1,17 @@
 import { ILogAction } from "../iLogAction";
-import * as constants from './constants';
+
+enum LOG_LINE_FILTER {
+    HEAP_ALLOCATE,
+    STATEMENT_EXECUTE,
+    SYSTEM_METHOD_ENTRY,
+    CONSTRUCTOR_ENTRY,
+    CONSTRUCTOR_EXIT,
+    CODE_UNIT_STARTED,
+    CODE_UNIT_FINISHED,
+    METHOD_ENTRY,
+    METHOD_EXIT,
+    SOQL_EXECUTE
+}
 
 export class ApexLogAction implements ILogAction{
     actions = {
@@ -24,7 +36,6 @@ export class ApexLogAction implements ILogAction{
         },
     
         removeHeapAllocateAndStatementExecute(filters: any, logLines: Array<string>){
-            console.log('@removeHeapAllocateAndStatementExecute');
             return logLines.filter(
                 line => !filters.isHeapAllocate(line) && !filters.isStatementExecute(line)
             );
@@ -42,26 +53,25 @@ export class ApexLogAction implements ILogAction{
 
     filters = {
         isHeapAllocate(line){
-            console.log('@isHeapAllocate');
-            return line && line.includes(constants.LOG_LINE.HEAP_ALLOCATE); 
+            return line && line.includes(LOG_LINE_FILTER.HEAP_ALLOCATE); 
         },
         isStatementExecute(line){
-            return line && line.includes(constants.LOG_LINE.STATEMENT_EXECUTE);   
+            return line && line.includes(LOG_LINE_FILTER.STATEMENT_EXECUTE);   
         },
         isEntry(line){
-            return line && (line.includes(constants.LOG_LINE.METHOD_ENTRY) || 
-                line.includes(constants.LOG_LINE.SYSTEM_METHOD_ENTRY) || 
-                line.includes(constants.LOG_LINE.CONSTRUCTOR_ENTRY)) ||
-                line.includes(constants.LOG_LINE.CODE_UNIT_STARTED);
+            return line && (line.includes(LOG_LINE_FILTER.METHOD_ENTRY) || 
+                line.includes(LOG_LINE_FILTER.SYSTEM_METHOD_ENTRY) || 
+                line.includes(LOG_LINE_FILTER.CONSTRUCTOR_ENTRY)) ||
+                line.includes(LOG_LINE_FILTER.CODE_UNIT_STARTED);
         },
         isExit(line){
-            return line && (line.includes(constants.LOG_LINE.METHOD_EXIT) || 
-                line.includes(constants.LOG_LINE.SYSTEM_METHOD_ENTRY) || 
-                line.includes(constants.LOG_LINE.CONSTRUCTOR_EXIT))  ||
-                line.includes(constants.LOG_LINE.CODE_UNIT_FINISHED);
+            return line && (line.includes(LOG_LINE_FILTER.METHOD_EXIT) || 
+                line.includes(LOG_LINE_FILTER.SYSTEM_METHOD_ENTRY) || 
+                line.includes(LOG_LINE_FILTER.CONSTRUCTOR_EXIT))  ||
+                line.includes(LOG_LINE_FILTER.CODE_UNIT_FINISHED);
         },
         extractSoqlLine(line){
-            return line && !line.includes(constants.LOG_LINE.SOQL_EXECUTE);
+            return line && !line.includes(LOG_LINE_FILTER.SOQL_EXECUTE);
         },
         tabs2Add2Line(numberOfTabs: number){
             let tabs2Return = numberOfTabs === 0 ? '' : '\t';

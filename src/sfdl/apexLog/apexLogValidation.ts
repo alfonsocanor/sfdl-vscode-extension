@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import * as utils from '../utils';
-import * as constants from './constants';
 import { ILogValidation } from "../iLogValidation";
 
 const editor = vscode.window.activeTextEditor;
+const EXECUTED_ACTION_SUCCESS_MESSAGE = 'Salesforce Debug Logs executed!';
+const EXECUTED_ACTION_ERROR_MESSAGE = 'Salesforce Debug Logs can\'t process the file. Invalid Apex Log.';
 
 export class ApexLogValidation implements ILogValidation{
     validations = {
@@ -21,8 +22,8 @@ export class ApexLogValidation implements ILogValidation{
         });
 
         if(!isValid){
-            utils.displayMessage(constants.EXECUTED_ACTION_ERROR_MESSAGE);
-            throw new Error(constants.EXECUTED_ACTION_ERROR_MESSAGE);
+            utils.displayMessage(EXECUTED_ACTION_ERROR_MESSAGE);
+            throw new Error(EXECUTED_ACTION_ERROR_MESSAGE);
         }
     }
 }
