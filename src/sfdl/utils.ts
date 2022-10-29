@@ -1,13 +1,19 @@
 import * as vscode from 'vscode';
 
-export function getLog(editor){
-    const document = editor.document;
-    const log = document.getText();
-    return log;
+const editor = vscode.window.activeTextEditor;
+
+export function getLog(){
+    if(editor){
+        const document = editor.document;
+        const log = document.getText();
+        return log;
+    }
+
+    return 'no log found';
 }
 
-export function getFileName(editor){
-    return editor.document.fileName;
+export function getFileName(){
+    return editor ? editor.document.fileName : 'no log found';
 }
 
 export function selectAllPageContent(editor){
@@ -20,13 +26,16 @@ export function selectAllPageContent(editor){
     return range;
 }
 
-export function navigateTop(editor){
-    var p = new vscode.Position(0,0);
-    var s = new vscode.Selection(p, p);
-    editor.selection = s;
-    editor.revealRange(s);
+export function navigateTop(){
+    if(editor){
+        var p = new vscode.Position(0,0);
+        var s = new vscode.Selection(p, p);
+        editor.selection = s;
+        editor.revealRange(s);
+    }
 }
 
 export function displayMessage(message){
+    console.log('@display message: ' + message);
     vscode.window.showInformationMessage(message);
 }

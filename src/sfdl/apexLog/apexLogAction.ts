@@ -1,29 +1,29 @@
-import { ILogAction } from "../iLogAction";
+import { LogAction } from "../logAction";
 
 enum LOG_LINE_FILTER {
-    HEAP_ALLOCATE,
-    STATEMENT_EXECUTE,
-    SYSTEM_METHOD_ENTRY,
-    CONSTRUCTOR_ENTRY,
-    CONSTRUCTOR_EXIT,
-    CODE_UNIT_STARTED,
-    CODE_UNIT_FINISHED,
-    METHOD_ENTRY,
-    METHOD_EXIT,
-    SOQL_EXECUTE
+    HEAP_ALLOCATE = 'HEAP_ALLOCATE',
+    STATEMENT_EXECUTE = 'STATEMENT_EXECUTE',
+    SYSTEM_METHOD_ENTRY = 'SYSTEM_METHOD_ENTRY',
+    CONSTRUCTOR_ENTRY = 'CONSTRUCTOR_ENTRY',
+    CONSTRUCTOR_EXIT = 'CONSTRUCTOR_EXIT',
+    CODE_UNIT_STARTED = 'CODE_UNIT_STARTED',
+    CODE_UNIT_FINISHED = 'CODE_UNIT_FINISHED',
+    METHOD_ENTRY = 'METHOD_ENTRY',
+    METHOD_EXIT = 'METHOD_EXIT',
+    SOQL_EXECUTE = 'SOQL_EXECUTE'
 }
 
-export class ApexLogAction implements ILogAction{
+export class ApexLogAction extends LogAction{
     actions = {
         hierarchyEntryExit(filters: any, logLines: Array<string>){
             let tabs2Add = 0;
             return logLines.map(line => {
-                if(super.filters.isEntry(line)){
+                if(filters.isEntry(line)){
                     tabs2Add++;
                     return filters.tabs2Add2Line(tabs2Add - 1) + line;
                 }
     
-                if(super.filters.isExit(line)){
+                if(filters.isExit(line)){
                     if(tabs2Add  === 0){
                         return tabs2Add;
                     }
@@ -81,17 +81,4 @@ export class ApexLogAction implements ILogAction{
             return tabs2Return;
         }
     };
-
-    apply(actionName: string, log: any): string {
-        let logLines = log?.split('\n');
-        let logFormatted; 
-        
-        if(logLines){
-            //actions passing as another argument for applyAll function
-            logFormatted = this.actions[actionName](this.filters, logLines, this.actions);
-            logFormatted.join('\n');
-        }
-        
-        return logFormatted ? logFormatted.join('\n') : log;
-    }
 }

@@ -6,14 +6,13 @@ export abstract class LogMenu {
 
     getOption(){
         const options = this.getMenuOptions();
-        console.log('@options: ' + options);
         return this.optionSelected(options);
     }
 
     private getMenuOptions(){
-        console.log('this._options.ACTIONS: ' + this.menuOptions);
         return this.menuOptions.map((action: {label: string, name: string}) => {
             return new DisplayMenu(
+                '',
                 action.label,
                 action.name
             );

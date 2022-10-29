@@ -1,12 +1,13 @@
 import { ILogAction } from "../iLogAction";
 import { ILogValidation } from "../iLogValidation";
 import { LogMenu } from "../logMenu";
-import { LogProcessor } from "../LogProcessor";
+import { LogProcessor } from "../logProcessor";
 
 export class ApexLog extends LogProcessor {
     logMenu: LogMenu;
     validation: ILogValidation;
     action: ILogAction;
+    successMessage = 'Salesforce Debug Logs executed!';
 
     constructor(private _logMenu: LogMenu, private _validation: ILogValidation, private _action: ILogAction){
         super();

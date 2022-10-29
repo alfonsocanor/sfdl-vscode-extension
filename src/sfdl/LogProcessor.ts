@@ -11,15 +11,23 @@ export abstract class LogProcessor implements ILogProcessor {
     abstract logMenu: LogMenu;
     abstract validation: ILogValidation;
     abstract action: ILogAction;
+    abstract successMessage: string;
     
-    process(): void {
-        let actionSelected = this.displayMenu();
-        let log = utils.getLog(editor);
-        this.runValidation(log);
-        let logFormatted = this.executeAction(actionSelected, log);
-        this.applyFormat(logFormatted);
-        utils.navigateTop(editor);
-        utils.displayMessage('SUCCESS');//this.constants.EXECUTED_ACTION_SUCCESS_MESSAGE);
+    async process(): Promise<void> {
+        try {
+            console.log('@process');
+            let log = utils.getLog();
+            console.log('@log ' + log);
+            this.runValidation(log);
+            let actionSelected = await this.displayMenu();
+            let logFormatted = this.executeAction(actionSelected.name, log);
+            this.applyFormat(logFormatted);
+            utils.navigateTop();
+            utils.displayMessage(this.successMessage);
+        } catch(e) {
+            console.log('@e ' + e);
+            utils.displayMessage(e);
+        }
     }
 
     displayMenu(): any {
