@@ -36,6 +36,5 @@ export function navigateTop(){
 }
 
 export function displayMessage(message){
-    console.log('@display message: ' + message);
     vscode.window.showInformationMessage(message);
 }

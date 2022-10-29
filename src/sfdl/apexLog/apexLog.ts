@@ -8,6 +8,7 @@ export class ApexLog extends LogProcessor {
     validation: ILogValidation;
     action: ILogAction;
     successMessage = 'Salesforce Debug Logs executed!';
+    exceptionMessage = 'Salesforce Debug Logs can\'t process the file. Invalid Apex Log.';
 
     constructor(private _logMenu: LogMenu, private _validation: ILogValidation, private _action: ILogAction){
         super();

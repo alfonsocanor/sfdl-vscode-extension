@@ -17,7 +17,7 @@ exports.Log = void 0;
 const apexLog_1 = __webpack_require__(3);
 const apexLogMenu_1 = __webpack_require__(6);
 const apexLogValidation_1 = __webpack_require__(9);
-const apexLogAction_1 = __webpack_require__(10);
+const apexLogAction_1 = __webpack_require__(11);
 //Map is logType => eventName => class/interface name
 const LOG_TYPE_PROCESOR_MAPPING = {
     'apexLog': new apexLog_1.ApexLog(new apexLogMenu_1.ApexLogMenu(), new apexLogValidation_1.ApexLogValidation(), new apexLogAction_1.ApexLogAction())
@@ -40,7 +40,7 @@ exports.Log = Log;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ApexLog = void 0;
-const logProcessor_1 = __webpack_require__(13);
+const logProcessor_1 = __webpack_require__(4);
 class ApexLog extends logProcessor_1.LogProcessor {
     constructor(_logMenu, _validation, _action) {
         super();
@@ -48,6 +48,7 @@ class ApexLog extends logProcessor_1.LogProcessor {
         this._validation = _validation;
         this._action = _action;
         this.successMessage = 'Salesforce Debug Logs executed!';
+        this.exceptionMessage = 'Salesforce Debug Logs can\'t process the file. Invalid Apex Log.';
         this.logMenu = _logMenu;
         this.validation = _validation;
         this.action = _action;
@@ -57,7 +58,49 @@ exports.ApexLog = ApexLog;
 
 
 /***/ }),
-/* 4 */,
+/* 4 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LogProcessor = void 0;
+const vscode = __webpack_require__(1);
+const utils = __webpack_require__(5);
+const editor = vscode.window.activeTextEditor;
+class LogProcessor {
+    async process() {
+        let log = utils.getLog();
+        let isValid = this.runValidation(log);
+        if (!isValid) {
+            utils.displayMessage(this.exceptionMessage);
+            return;
+        }
+        let actionSelected = await this.displayMenu();
+        let logFormatted = this.executeAction(actionSelected.name, log);
+        this.applyFormat(logFormatted);
+        utils.displayMessage(this.successMessage);
+        utils.navigateTop();
+    }
+    displayMenu() {
+        return this.logMenu.getOption();
+    }
+    runValidation(log) {
+        return this.validation.validate(log);
+    }
+    executeAction(actionName, log) {
+        return this.action.apply(actionName, log);
+    }
+    applyFormat(log) {
+        let textRange = utils.selectAllPageContent(editor);
+        editor?.edit(editBuilder => {
+            editBuilder.replace(textRange, log);
+        });
+    }
+}
+exports.LogProcessor = LogProcessor;
+
+
+/***/ }),
 /* 5 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -96,7 +139,6 @@ function navigateTop() {
 }
 exports.navigateTop = navigateTop;
 function displayMessage(message) {
-    console.log('@display message: ' + message);
     vscode.window.showInformationMessage(message);
 }
 exports.displayMessage = displayMessage;
@@ -187,7 +229,7 @@ exports.DisplayMenu = DisplayMenu;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ApexLogValidation = void 0;
 const utils = __webpack_require__(5);
-const logValidation_1 = __webpack_require__(14);
+const logValidation_1 = __webpack_require__(10);
 class ApexLogValidation extends logValidation_1.LogValidation {
     constructor() {
         super(...arguments);
@@ -207,6 +249,23 @@ exports.ApexLogValidation = ApexLogValidation;
 
 /***/ }),
 /* 10 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LogValidation = void 0;
+class LogValidation {
+    validate(log) {
+        return Object.keys(this.validations).some((validation) => {
+            return this.validations[validation](log);
+        });
+    }
+}
+exports.LogValidation = LogValidation;
+
+
+/***/ }),
+/* 11 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -293,7 +352,6 @@ exports.ApexLogAction = ApexLogAction;
 
 
 /***/ }),
-/* 11 */,
 /* 12 */
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -313,76 +371,6 @@ class LogAction {
     }
 }
 exports.LogAction = LogAction;
-
-
-/***/ }),
-/* 13 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.LogProcessor = void 0;
-const vscode = __webpack_require__(1);
-const utils = __webpack_require__(5);
-const editor = vscode.window.activeTextEditor;
-class LogProcessor {
-    async process() {
-        try {
-            console.log('@process');
-            let log = utils.getLog();
-            console.log('@log ' + log);
-            this.runValidation(log);
-            let actionSelected = await this.displayMenu();
-            let logFormatted = this.executeAction(actionSelected.name, log);
-            this.applyFormat(logFormatted);
-            utils.navigateTop();
-            utils.displayMessage(this.successMessage);
-        }
-        catch (e) {
-            console.log('@e ' + e);
-            utils.displayMessage(e);
-        }
-    }
-    displayMenu() {
-        return this.logMenu.getOption();
-    }
-    runValidation(log) {
-        this.validation.validate(log);
-    }
-    executeAction(actionName, log) {
-        return this.action.apply(actionName, log);
-    }
-    applyFormat(log) {
-        let textRange = utils.selectAllPageContent(editor);
-        editor?.edit(editBuilder => {
-            editBuilder.replace(textRange, log);
-        });
-    }
-}
-exports.LogProcessor = LogProcessor;
-
-
-/***/ }),
-/* 14 */
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.LogValidation = void 0;
-class LogValidation {
-    validate(log) {
-        console.log('@validation');
-        let isValid = Object.keys(this.validations).some((validation) => {
-            console.log('@validation: ' + validation);
-            return this.validations[validation](log);
-        });
-        if (!isValid) {
-            console.log('@isNotValid');
-            throw new Error(this.exceptionMessage);
-        }
-    }
-}
-exports.LogValidation = LogValidation;
 
 
 /***/ })

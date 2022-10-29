@@ -1,5 +1,5 @@
 /*
-Define 
+Evaluate the file base on rules defined
 */
 export interface ILogValidation { 
     /**
@@ -16,7 +16,7 @@ export interface ILogValidation {
     * Validate log 
     *
     * @param  log   the log capture from vscode.window
-    * @return         void
+    * @return       true if the log is valid otherwise false
     */
-    validate(log: any): void;
+    validate(log: any): boolean;
 }
