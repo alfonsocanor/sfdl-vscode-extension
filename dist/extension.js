@@ -76,8 +76,8 @@ class LogProcessor {
             return;
         }
         let actionSelected = await this.displayMenu();
-        let logFormatted = this.executeAction(actionSelected.name, log);
-        this.applyFormat(logFormatted);
+        let logFormatted = this.applyAction(actionSelected.name, log);
+        this.refreshWindow(logFormatted);
         utils.displayMessage(this.successMessage);
         utils.navigateTop();
     }
@@ -87,11 +87,11 @@ class LogProcessor {
     runValidation(log) {
         return this.validation.validate(log);
     }
-    executeAction(actionName, log) {
+    applyAction(actionName, log) {
         return this.action.apply(actionName, log);
     }
-    applyFormat(log) {
-        let textRange = utils.selectAllPageContent(editor);
+    refreshWindow(log) {
+        let textRange = utils.selectAllPageContent();
         editor?.edit(editBuilder => {
             editBuilder.replace(textRange, log);
         });
@@ -108,28 +108,31 @@ exports.LogProcessor = LogProcessor;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.displayMessage = exports.navigateTop = exports.selectAllPageContent = exports.getFileName = exports.getLog = void 0;
 const vscode = __webpack_require__(1);
-const editor = vscode.window.activeTextEditor;
 function getLog() {
-    if (editor) {
-        const document = editor.document;
-        const log = document.getText();
-        return log;
-    }
-    return 'no log found';
+    let editor = vscode.window.activeTextEditor;
+    const document = editor?.document;
+    const log = document?.getText();
+    return log || 'no log found';
 }
 exports.getLog = getLog;
 function getFileName() {
+    let editor = vscode.window.activeTextEditor;
     return editor ? editor.document.fileName : 'no log found';
 }
 exports.getFileName = getFileName;
-function selectAllPageContent(editor) {
-    let firstLine = editor.document.lineAt(0);
-    let lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-    let range = new vscode.Range(0, firstLine.range.start.character, editor.document.lineCount - 1, lastLine.range.end.character);
+function selectAllPageContent() {
+    let editor = vscode.window.activeTextEditor;
+    let range;
+    if (editor) {
+        let firstLine = editor.document.lineAt(0);
+        let lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+        range = new vscode.Range(0, firstLine.range.start.character, editor.document.lineCount - 1, lastLine.range.end.character);
+    }
     return range;
 }
 exports.selectAllPageContent = selectAllPageContent;
 function navigateTop() {
+    let editor = vscode.window.activeTextEditor;
     if (editor) {
         var p = new vscode.Position(0, 0);
         var s = new vscode.Selection(p, p);
@@ -233,7 +236,6 @@ const logValidation_1 = __webpack_require__(10);
 class ApexLogValidation extends logValidation_1.LogValidation {
     constructor() {
         super(...arguments);
-        this.exceptionMessage = 'Salesforce Debug Logs can\'t process the file. Invalid Apex Log.';
         this.validations = {
             isApexLog(log) {
                 return log && log.includes('APEX_CODE');

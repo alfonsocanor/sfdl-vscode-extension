@@ -11,8 +11,14 @@ export abstract class LogProcessor implements ILogProcessor {
     abstract logMenu: LogMenu;
     abstract validation: ILogValidation;
     abstract action: ILogAction;
+    /**
+    * Success message to display at the end of processing
+    */
     abstract successMessage: string;
-    abstract exceptionMessage: string
+    /**
+    * Error message to display for invalid log
+    */
+    abstract exceptionMessage: string;
     
     async process(): Promise<void> {
         let log = utils.getLog();
@@ -25,9 +31,9 @@ export abstract class LogProcessor implements ILogProcessor {
 
         let actionSelected = await this.displayMenu();
         
-        let logFormatted = this.executeAction(actionSelected.name, log);
+        let logFormatted = this.applyAction(actionSelected.name, log);
 
-        this.applyFormat(logFormatted);
+        this.refreshWindow(logFormatted);
 
         utils.displayMessage(this.successMessage);
         utils.navigateTop();
@@ -41,12 +47,12 @@ export abstract class LogProcessor implements ILogProcessor {
        return this.validation.validate(log);
     }
 
-    executeAction(actionName: string, log: string){
+    applyAction(actionName: string, log: string){
         return this.action.apply(actionName, log);
     }
     
-    applyFormat(log: string){
-        let textRange = utils.selectAllPageContent(editor);
+    refreshWindow(log: string){
+        let textRange = utils.selectAllPageContent();
         editor?.edit(editBuilder => {
             editBuilder.replace(textRange, log);
         });

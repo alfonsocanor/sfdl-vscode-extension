@@ -1,7 +1,6 @@
 import { ILogValidation } from "./iLogValidation";
 
 export abstract class LogValidation implements ILogValidation {
-    abstract exceptionMessage: string;
     abstract validations: any;
     
     validate(log: any): boolean {

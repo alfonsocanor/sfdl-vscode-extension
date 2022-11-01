@@ -1,12 +1,7 @@
 /*
 Evaluate the file base on rules defined
 */
-export interface ILogValidation { 
-    /**
-    * Error message to display for invalid log
-    */
-    exceptionMessage: string;
-    
+export interface ILogValidation {   
     /**
     * validations in the form of function expresions evaluated 
     */
