@@ -5,8 +5,6 @@ import * as vscode from 'vscode';
 import * as utils from './utils';
 import { LogMenu } from "./logMenu";
 
-const editor = vscode.window.activeTextEditor;
-
 export abstract class LogProcessor implements ILogProcessor {
     abstract logMenu: LogMenu;
     abstract validation: ILogValidation;
@@ -52,6 +50,7 @@ export abstract class LogProcessor implements ILogProcessor {
     }
     
     refreshWindow(log: string){
+        let editor = vscode.window.activeTextEditor;
         let textRange = utils.selectAllPageContent();
         editor?.edit(editBuilder => {
             editBuilder.replace(textRange, log);

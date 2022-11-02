@@ -66,7 +66,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LogProcessor = void 0;
 const vscode = __webpack_require__(1);
 const utils = __webpack_require__(5);
-const editor = vscode.window.activeTextEditor;
 class LogProcessor {
     async process() {
         let log = utils.getLog();
@@ -91,6 +90,7 @@ class LogProcessor {
         return this.action.apply(actionName, log);
     }
     refreshWindow(log) {
+        let editor = vscode.window.activeTextEditor;
         let textRange = utils.selectAllPageContent();
         editor?.edit(editBuilder => {
             editBuilder.replace(textRange, log);
@@ -231,19 +231,12 @@ exports.DisplayMenu = DisplayMenu;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ApexLogValidation = void 0;
-const utils = __webpack_require__(5);
 const logValidation_1 = __webpack_require__(10);
 class ApexLogValidation extends logValidation_1.LogValidation {
     constructor() {
         super(...arguments);
-        this.validations = {
-            isApexLog(log) {
-                return log && log.includes('APEX_CODE');
-            },
-            isLogFile() {
-                return utils.getFileName().includes('.log');
-            }
-        };
+        this.validFilters = ['APEX_CODE'];
+        this.validFileExtensions = ['.log'];
     }
 }
 exports.ApexLogValidation = ApexLogValidation;
@@ -251,16 +244,21 @@ exports.ApexLogValidation = ApexLogValidation;
 
 /***/ }),
 /* 10 */
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LogValidation = void 0;
+const utils = __webpack_require__(5);
 class LogValidation {
     validate(log) {
-        return Object.keys(this.validations).some((validation) => {
-            return this.validations[validation](log);
-        });
+        return this.validateFileExtension() || this.validateLogFile(log);
+    }
+    validateFileExtension() {
+        return this.validFileExtensions.some(fileExtension => utils.getFileName().includes(fileExtension));
+    }
+    validateLogFile(log) {
+        return this.validFilters.some(value => log.includes(value));
     }
 }
 exports.LogValidation = LogValidation;
