@@ -18,13 +18,13 @@ sfdl is a tool that allows you format Apex logs for improving analysis
 
 # actions
 - remove HEAP_SIZE and STAMENT_EXECUTE
-![removeHeapAndStament](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiGqA&operationContext=DELIVERY&contentId=05T5w00001gQuXT&page=0&d=/a/5w000000JWHo/eJzr6DTMvq8PFwtfzOrnkNw1XC61HinkQtVmHJC7PZg&oid=00D5w000004ChOL&dpt=null&viewId=)
+![removeHeapAndStament](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiHNc&operationContext=DELIVERY&contentId=05T5w00001gQvgW&page=0&d=/a/5w000000JWIr/zPiXqwoKzhzfNvJ0y70rtkzxrGMB_t9JEdy6KtiS81c&oid=00D5w000004ChOL&dpt=null&viewId=)
 - format hierarchy entry/exit methods
 
-![applyHierarchy](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiGpw&operationContext=DELIVERY&contentId=05T5w00001gQuX0&page=0&d=/a/5w000000JWHy/W.0q3dYwWpcmzztA3x6zmZRxT65OriAuowL9Nz_hO5Q&oid=00D5w000004ChOL&dpt=null&viewId=)
+![applyHierarchy](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiHN4&operationContext=DELIVERY&contentId=05T5w00001gQvfe&page=0&d=/a/5w000000JWIh/TJ9c17TKPtKlLDsSowzyP76SQh5doo2PjCfJUSkXHOg&oid=00D5w000004ChOL&dpt=null&viewId=)
 - apply all sfdl actions
 
-![applyAllActions](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiGqK&operationContext=DELIVERY&contentId=05T5w00001gQuXd&page=0&d=/a/5w000000JWI3/U8Z8OUzUYLCcrKJRHZWVatr8IgysnRoyo_j6eg6JIPg&oid=00D5w000004ChOL&dpt=null&viewId=)
+![applyAllActions](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiHNX&operationContext=DELIVERY&contentId=05T5w00001gQvgR&page=0&d=/a/5w000000JWIw/byTaghuEUkoHR1riXtkwU6yZjHH.1HfLBPX.YybQdBQ&oid=00D5w000004ChOL&dpt=null&viewId=)
 
   
 
