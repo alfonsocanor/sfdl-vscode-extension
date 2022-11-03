@@ -29,7 +29,7 @@ sfdl is a tool that allows you format Apex logs for improving analysis
 
   
 
-# Other sfdl tools
+# other sfdl tools
 
 - [sfdl-cli](https://github.com/alfonsocanor/sfdl)
 
