@@ -18,6 +18,7 @@ sfdl is a tool that allows you format Apex logs for improving analysis
 
 # actions
 - remove HEAP_SIZE and STAMENT_EXECUTE
+
 ![removeHeapAndStament](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiHNc&operationContext=DELIVERY&contentId=05T5w00001gQvgW&page=0&d=/a/5w000000JWIr/zPiXqwoKzhzfNvJ0y70rtkzxrGMB_t9JEdy6KtiS81c&oid=00D5w000004ChOL&dpt=null&viewId=)
 - format hierarchy entry/exit methods
 
