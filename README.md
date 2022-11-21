@@ -25,8 +25,11 @@
 
   
 
-# other sfdl tools
+# resources
+- [official page](https://salesforcedebuglogs.com)
 
 - [sfdl-cli](https://github.com/alfonsocanor/sfdl)
+
+- [sfdl-vscode-extension](https://github.com/alfonsocanor/sfdl)
 
 - [sfdl-chrome-extension](https://github.com/alfonsocanor/sfdl-chrome-extension)
