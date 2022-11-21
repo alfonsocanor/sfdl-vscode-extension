@@ -4,7 +4,7 @@
   "publisher": "sfdl",
   "description": "Increases productivity during debugging process Apex log analysis",
   "icon": "images/blueSoda_icon.png",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "engines": {
     "vscode": "^1.72.0"
   },
