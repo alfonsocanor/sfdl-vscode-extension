@@ -1,5 +1,4 @@
-# &nbsp;<img width="32" height="32" src="images/blueSoda_icon.png"> sfdl
-sfdl is a tool that allows you format Apex logs increasing productivity during debugging process log analysis
+**sfdl** is a tool that allows you format Apex logs increasing productivity during debugging process log analysis
 
 # how to use it
 
