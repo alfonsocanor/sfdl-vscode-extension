@@ -26,10 +26,10 @@
   
 
 # resources
-- [official page](https://alfonsocanor.github.io/sfdl-official-page)
-
 - [sfdl-cli](https://github.com/alfonsocanor/sfdl)
 
 - [sfdl-vscode-extension](https://github.com/alfonsocanor/sfdl)
 
 - [sfdl-chrome-extension](https://github.com/alfonsocanor/sfdl-chrome-extension)
+
+- [salesforce debug logs - official page](https://salesforcedebuglogs.com)
