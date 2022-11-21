@@ -2,8 +2,8 @@
   "name": "sfdl",
   "displayName": "sfdl",
   "description": "Salesforce Debug Logs ",
-  "icon": "./images/blueSoda_icon.png",
-  "version": "0.0.1",
+  "icon": "images/blueSoda_icon.png",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -21,6 +21,10 @@
         "title": "SFDL: Press Enter and Select an Action..."
       }
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alfonsocanor/sfdl-vscode-extension"
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

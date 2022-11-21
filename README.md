@@ -1,8 +1,5 @@
-![sfdl-gif-logo](https://mindful-unicorn-vro2dw-dev-ed--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000RGRCC&operationContext=DELIVERY&contentId=05T5w00001VH6UN&page=0&d=/a/5w000000JIhY/7PB7wJFC1iuk_VxensrXYn5j9BblMmtyknhcx00vVyQ&oid=00D5w000004ChOL)
-
-# sfdl
-
-sfdl is a tool that allows you format Apex logs for improving analysis
+# &nbsp;<img width="32" height="32" src="images/blueSoda_icon.png"> sfdl
+sfdl is a tool that allows you format Apex logs increasing productivity during debugging process log analysis
 
 # how to use it
 
