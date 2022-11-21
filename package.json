@@ -1,9 +1,10 @@
 {
   "name": "sfdl",
-  "displayName": "sfdl",
-  "description": "Salesforce Debug Logs ",
+  "displayName": "Salesforce Debug Log",
+  "publisher": "sfdl",
+  "description": "Increases productivity during debugging process Apex log analysis",
   "icon": "images/blueSoda_icon.png",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.72.0"
   },
