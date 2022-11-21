@@ -26,7 +26,7 @@
   
 
 # resources
-- [official page](https://salesforcedebuglogs.com)
+- [official page](https://alfonsocanor.github.io/sfdl-official-page)
 
 - [sfdl-cli](https://github.com/alfonsocanor/sfdl)
 
