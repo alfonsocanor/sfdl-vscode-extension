@@ -1,2 +1,3 @@
 # Tooling files
 node_modules
+*.vsix
