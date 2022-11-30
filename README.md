@@ -4,7 +4,7 @@
 
 - ### on the apex log file press:
 	- mac OS: command + shift + p
-	- windows: control + shirt + p
+	- windows: control + shift + p
 - ### type:
 	- SFDL: press enter and select an action...
 - ### select one of the 3 available actions:
@@ -28,7 +28,7 @@
 # resources
 - [sfdl-cli](https://github.com/alfonsocanor/sfdl)
 
-- [sfdl-vscode-extension](https://github.com/alfonsocanor/sfdl)
+- [sfdl-vscode-extension](https://github.com/alfonsocanor/sfdl-vscode-extension)
 
 - [sfdl-chrome-extension](https://github.com/alfonsocanor/sfdl-chrome-extension)
 
