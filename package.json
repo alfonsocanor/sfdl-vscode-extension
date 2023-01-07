@@ -4,7 +4,7 @@
   "publisher": "sfdl",
   "description": "Increases productivity during debugging process Apex log analysis",
   "icon": "images/blueSoda_icon.png",
-  "version": "1.8.0",
+  "version": "2.0.0",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -12,14 +12,29 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:sfdl.processLog"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "My Extension Configuration",
+      "properties": {
+        "sfdl.enableActionsAutoExecution": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables or disables the execution of the action automatically when a file with .log extension is opened"
+        }
+      }
+    },
     "commands": [
       {
         "command": "sfdl.processLog",
         "title": "SFDL: Press Enter and Select an Action..."
+      },
+      {
+        "command": "sfdl.enableActionsAutoExecution",
+        "title": "SFDL: Turn on/off apply all actions auto execution"
       }
     ]
   },
