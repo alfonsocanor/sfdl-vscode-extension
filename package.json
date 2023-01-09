@@ -22,7 +22,7 @@
       "properties": {
         "sfdl.enableActionsAutoExecution": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Enables or disables the execution of the action automatically when a file with .log extension is opened"
         }
       }

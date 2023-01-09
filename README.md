@@ -23,6 +23,8 @@
 
 ![applyAllActions](https://mindful-unicorn-vro2dw-dev-ed.file.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Gif&versionId=0685w00000UiHNX&operationContext=DELIVERY&contentId=05T5w00001gQvgR&page=0&d=/a/5w000000JWIw/byTaghuEUkoHR1riXtkwU6yZjHH.1HfLBPX.YybQdBQ&oid=00D5w000004ChOL&dpt=null&viewId=)
 
+- SFDL: Turn on/off apply all actions auto execution
+By default is off, if you turning on, all the formatting actions will be applied for any folder with .log as extension automatically. 
   
 
 # resources
