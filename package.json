@@ -29,10 +29,6 @@
       {
         "command": "sfdl.processLog",
         "title": "SFDL: Press Enter and Select an Action..."
-      },
-      {
-        "command": "sfdl.enableActionsAutoExecution",
-        "title": "SFDL: Turn on/off apply all actions auto execution"
       }
     ]
   },
