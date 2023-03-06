@@ -16,8 +16,26 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('sfdl.processLog', () => {
 		new Log('apexLog').process();
 	});
-	
 	context.subscriptions.push(disposable);
+
+	async function handleOpenLogFile(textDocument: vscode.TextDocument) {
+		// Open the file and bring it into focus
+		try{
+			await vscode.window.showTextDocument(textDocument);
+		} catch {}
+
+		// Check if the file has the .log extension and if it contains 'APEX_CODE'
+		if (textDocument.uri.fsPath.endsWith('.log')) {
+			// Check the value of the "sfdl.enableActionsAutoExecution" option
+			const enableActionsAutoExecution = vscode.workspace.getConfiguration().get('sfdl.enableActionsAutoExecution');
+			if (enableActionsAutoExecution) {
+				new Log('apexLogAutoApply').process();
+			}
+		}
+	}
+
+	// Register the event listener
+	vscode.workspace.onDidOpenTextDocument(handleOpenLogFile);
 }
 
 // This method is called when your extension is deactivated
