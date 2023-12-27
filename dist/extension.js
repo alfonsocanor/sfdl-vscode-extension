@@ -402,8 +402,8 @@ class ApexLogAction extends logAction_1.LogAction {
                 return line && !line.includes(LOG_LINE_FILTER.SOQL_EXECUTE);
             },
             tabs2Add2Line(numberOfTabs) {
-                let tabs2Return = numberOfTabs === 0 ? '' : '\t';
-                return tabs2Return.repeat(numberOfTabs);
+                let tab = '\t';
+                return tab.repeat(numberOfTabs);
             }
         };
     }
