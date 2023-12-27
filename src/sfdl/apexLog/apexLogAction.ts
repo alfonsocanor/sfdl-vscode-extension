@@ -75,10 +75,7 @@ export class ApexLogAction extends LogAction{
         },
         tabs2Add2Line(numberOfTabs: number){
             let tabs2Return = numberOfTabs === 0 ? '' : '\t';
-            for(let counter = 1; counter < numberOfTabs; counter++){
-                tabs2Return = tabs2Return + '\t';
-            }
-            return tabs2Return;
+            return tabs2Return.repeat(numberOfTabs);
         }
     };
 }
