@@ -511,11 +511,6 @@ function activate(context) {
     });
     context.subscriptions.push(disposable);
     async function handleOpenLogFile(textDocument) {
-        // Open the file and bring it into focus
-        try {
-            await vscode.window.showTextDocument(textDocument);
-        }
-        catch { }
         // Check if the file has the .log extension and if it contains 'APEX_CODE'
         if (textDocument.uri.fsPath.endsWith('.log')) {
             // Check the value of the "sfdl.enableActionsAutoExecution" option
